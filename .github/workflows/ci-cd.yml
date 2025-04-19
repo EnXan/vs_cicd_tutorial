@@ -28,14 +28,10 @@ jobs:
           docker tag cicd-tutorial:${{ github.sha }} enxan/cicd-tutorial:latest
           docker push enxan/cicd-tutorial:latest
 
-      - name: Deploy to server
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            docker pull enxan/cicd-tutorial:latest
-            docker stop cicd-tutorial || true
-            docker rm cicd-tutorial || true
-            docker run -d --name cicd-tutorial -p 80:80 enxan/cicd-tutorial:latest
+      - name: Local Deployment (Demo)
+        run: |
+          docker run -d -p 3000:3000 --name running-app docker-cicd-demo:${{ github.sha }}
+          # Hier könnte ein einfacher Test kommen, der prüft, ob die App erreichbar ist
+          curl http://localhost:3000
+          docker logs running-app
+          docker stop running-app
