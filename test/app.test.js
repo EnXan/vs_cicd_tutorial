@@ -2,6 +2,13 @@ const request = require("supertest");
 const app = require("../app");
 
 describe("Docker CI/CD Demo App", () => {
+  // Test für die Hauptseite
+  test("GET / sollte erfolgreich sein und HTML zurückgeben", async () => {
+    const response = await request(app).get("/");
+    expect(response.statusCode).toBe(200);
+    expect(response.headers["content-type"]).toMatch(/html/);
+  });
+
   // Test für den API-Endpunkt
   test("GET /api/status sollte JSON mit Statusdaten zurückgeben", async () => {
     const response = await request(app).get("/api/status");
