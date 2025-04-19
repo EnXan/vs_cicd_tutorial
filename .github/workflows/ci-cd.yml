@@ -43,7 +43,7 @@ jobs:
           # Function to retry curl with timeout
           function curl_with_retry {
             local retries=3
-            local wait=2
+            local wait=4
             local count=0
             until [ $count -ge $retries ]
             do
