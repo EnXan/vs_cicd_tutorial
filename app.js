@@ -27,7 +27,7 @@ const indexHtml = `
   <title>CI/CD mit Docker</title>
   <link rel="stylesheet" href="/css/styles.css" />
 </head>
-<body class="bg-gray-100 flex flex-col h-screen m-0 overflow-hidden">
+<body class="bg-gray-200 flex flex-col h-screen m-0 overflow-hidden">
   <header class="bg-slate-800 text-white py-2">
     <div class="container mx-auto px-4">
       <h1 class="text-xl font-bold">CI/CD mit Docker</h1>
