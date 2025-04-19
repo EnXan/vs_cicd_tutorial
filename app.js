@@ -79,7 +79,7 @@ app.use((err, req, res, next) => {
 });
 
 if (process.env.NODE_ENV !== "test") {
-  app.listen(port, "127.0.0.1", () => {
+  app.listen(port, "0.0.0.0", () => {
     console.log(`App läuft auf http://127.0.0.1:${port}`);
   });
 }
