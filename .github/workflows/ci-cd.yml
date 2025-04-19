@@ -30,8 +30,47 @@ jobs:
 
       - name: Local Deployment (Demo)
         run: |
+          # Run container in background
           docker run -d -p 3000:3000 --name running-app cicd-tutorial:${{ github.sha }}
-          # Hier könnte ein einfacher Test kommen, der prüft, ob die App erreichbar ist
-          curl http://localhost:3000
+
+          # Wait for container to fully start - add a 5 second delay
+          echo "Waiting for container to start..."
+          sleep 5
+
+          # Check container is running
+          docker ps
+
+          # Function to retry curl with timeout
+          function curl_with_retry {
+            local retries=3
+            local wait=2
+            local count=0
+            until [ $count -ge $retries ]
+            do
+              echo "Attempt $((count+1)) to connect to application..."
+              curl -s --max-time 5 http://localhost:3000 && break
+              count=$((count+1))
+              echo "Waiting $wait seconds before retrying..."
+              sleep $wait
+            done
+            
+            if [ $count -eq $retries ]; then
+              echo "Failed to connect after $retries attempts"
+              # Get container logs for debugging
+              docker logs running-app
+              return 1
+            fi
+            
+            return 0
+          }
+
+          # Try to connect to the running app
+          curl_with_retry
+
+          # Show container logs regardless of curl success
+          echo "Container logs:"
           docker logs running-app
+
+          # Cleanup
           docker stop running-app
+          docker rm running-app
