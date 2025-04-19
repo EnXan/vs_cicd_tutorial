@@ -30,7 +30,7 @@ jobs:
 
       - name: Local Deployment (Demo)
         run: |
-          docker run -d -p 3000:3000 --name running-app docker-cicd-demo:${{ github.sha }}
+          docker run -d -p 3000:3000 --name running-app cicd-tutorial:${{ github.sha }}
           # Hier könnte ein einfacher Test kommen, der prüft, ob die App erreichbar ist
           curl http://localhost:3000
           docker logs running-app
