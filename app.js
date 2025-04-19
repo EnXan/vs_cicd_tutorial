@@ -38,19 +38,7 @@ const indexHtml = `
       <h2 class="text-xl font-semibold text-slate-700 mb-4">Willkommen zur Demo-App</h2>
       <p class="mb-4">Diese App wurde mit Docker gebaut und über eine CI/CD-Pipeline deployed.</p>
 
-      <div
-        id="status"
-        class="my-4 p-3 bg-gray-100 border border-gray-300 rounded"
-      >
-        Status wird geladen...
-      </div>
-
-      <button
-        id="checkStatus"
-        class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded transition-colors"
-      >
-        Status prüfen
-      </button>
+      
     </div>
   </main>
   <footer class="bg-slate-800 text-white py-2">
@@ -63,7 +51,6 @@ const indexHtml = `
 </html>
 `;
 
-// Write the HTML file to the views directory
 fs.writeFileSync(path.join(viewsDir, "index.html"), indexHtml);
 
 // Routen
@@ -92,8 +79,8 @@ app.use((err, req, res, next) => {
 });
 
 if (process.env.NODE_ENV !== "test") {
-  app.listen(port, "0.0.0.0", () => {
-    console.log(`App läuft auf http://0.0.0.0:${port}`);
+  app.listen(port, "127.0.0.1", () => {
+    console.log(`App läuft auf http://127.0.0.1:${port}`);
   });
 }
 
